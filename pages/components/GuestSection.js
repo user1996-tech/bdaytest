@@ -57,7 +57,9 @@ function GuestSection({
               if (number == "main") {
                 temp.mainGuest.firstName = event.target.value;
               } else {
-                temp.additionalGuests[number]?.firstName = event.target.value;
+                if (temp.additionalGuests != undefined) {
+                  temp.additionalGuests[number].firstName = event.target.value;
+                }
               }
 
               setData(temp);
@@ -80,7 +82,9 @@ function GuestSection({
               if (number == "main") {
                 temp.mainGuest.lastName = event.target.value;
               } else {
-                temp.additionalGuests[number]?.lastName = event.target.value;
+                if (temp.additionalGuests != undefined) {
+                  temp.additionalGuests[number].lastName = event.target.value;
+                }
               }
 
               setData(temp);
@@ -104,7 +108,9 @@ function GuestSection({
             if (number == "main") {
               temp.mainGuest.notes = event.target.value;
             } else {
-              temp.additionalGuests[number]?.notes = event.target.value;
+              if (temp.additionalGuests != undefined) {
+                temp.additionalGuests[number].notes = event.target.value;
+              }
             }
 
             setData(temp);
