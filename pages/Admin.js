@@ -50,7 +50,7 @@ function Admin() {
           <tbody>
             {data?.docs.map((item, index) => {
               return (
-                <tr className="even:bg-white odd:bg-[#F6F6F6]">
+                <tr className="even:bg-white odd:bg-[#F6F6F6]" key={item.id}>
                   <td className="text-center">{index + 1}</td>
                   <td className="text-center">{item.data().firstName}</td>
                   <td className="text-center">{item.data().lastName}</td>
