@@ -5,7 +5,9 @@ function Invite({ formRef }) {
     <div className="flex items-center flex-col bg-[#00000075] snap-always snap-center">
       <div className="h-screen flex flex-col items-center">
         <div className="text-center">
-          <p className="text-white text-[120px] font-GreatVibes">Haukur's </p>
+          <p className="text-white text-[120px] font-GreatVibes">
+            Haukur&apos;s{" "}
+          </p>
           <p className="text-white text-[100px] font-GreatVibes mt-[-70px]">
             60th
           </p>
