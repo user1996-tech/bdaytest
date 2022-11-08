@@ -17,7 +17,7 @@ function GuestSection({
       firstNameStyle = { borderWidth: "2px" };
     }
   } else {
-    if (errorMessageTracking.additionalGuests[number].firstName == "Y") {
+    if (errorMessageTracking.additionalGuests[number]?.firstName == "Y") {
       firstNameStyle = { borderWidth: "2px" };
     }
   }
@@ -27,7 +27,7 @@ function GuestSection({
       lastNameStyle = { borderWidth: "2px" };
     }
   } else {
-    if (errorMessageTracking.additionalGuests[number].lastName == "Y") {
+    if (errorMessageTracking.additionalGuests[number]?.lastName == "Y") {
       lastNameStyle = { borderWidth: "2px" };
     }
   }
@@ -57,7 +57,7 @@ function GuestSection({
               if (number == "main") {
                 temp.mainGuest.firstName = event.target.value;
               } else {
-                temp.additionalGuests[number].firstName = event.target.value;
+                temp.additionalGuests[number]?.firstName = event.target.value;
               }
 
               setData(temp);
@@ -80,7 +80,7 @@ function GuestSection({
               if (number == "main") {
                 temp.mainGuest.lastName = event.target.value;
               } else {
-                temp.additionalGuests[number].lastName = event.target.value;
+                temp.additionalGuests[number]?.lastName = event.target.value;
               }
 
               setData(temp);
@@ -104,7 +104,7 @@ function GuestSection({
             if (number == "main") {
               temp.mainGuest.notes = event.target.value;
             } else {
-              temp.additionalGuests[number].notes = event.target.value;
+              temp.additionalGuests[number]?.notes = event.target.value;
             }
 
             setData(temp);

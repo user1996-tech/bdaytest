@@ -64,8 +64,8 @@ function Form({ formRef }) {
       tempErrorMessageTracking.mainGuest.lastName = "N";
     }
 
-    if (data.additionalGuests.length != 0) {
-      for (var i = 0; i < data.additionalGuests.length; i++) {
+    if (data.additionalGuests?.length != 0) {
+      for (var i = 0; i < data.additionalGuests?.length; i++) {
         // check firstName
         if (data.additionalGuests[i].firstName == "") {
           if (!tempErrorMessage.includes(errorMessageTypes.firstName)) {
@@ -143,9 +143,9 @@ function Form({ formRef }) {
       });
       docRefArray.push(temp?.id);
 
-      if (data.additionalGuests.length != 0) {
+      if (data.additionalGuests?.length != 0) {
         console.log("in 1");
-        for (var i = 0; i < data.additionalGuests.length; i++) {
+        for (var i = 0; i < data.additionalGuests?.length; i++) {
           console.log("in 2");
           temp = await addDoc(collection(db, "guestList"), {
             firstName: data.additionalGuests[i].firstName.trim(),
@@ -193,7 +193,7 @@ function Form({ formRef }) {
       ref={formRef}
     >
       <ToastContainer />
-      <div className="border-[#DCB974] border-2 rounded-lg flex justify-center mx-auto py-5 max-h-screen overflow-y-scroll text-white px-5 scrollbar-thin scrollbar-thumb-[#DCB974]/40 scrollbar-track-[#031934]/40 ">
+      <div className="border-[#DCB974] border-2 rounded-lg justify-center mx-auto py-5 max-h-screen overflow-y-scroll text-white px-5 scrollbar-thin scrollbar-thumb-[#DCB974]/40 scrollbar-track-[#031934]/40 ">
         <form onSubmit={handleSubmit} className="">
           {/* WILL YOU BE JOINING US SECTION  */}
           <div className="flex flex-col space-y-5">
@@ -271,7 +271,7 @@ function Form({ formRef }) {
             setErrorMessageTracking={setErrorMessageTracking}
           />
 
-          {data.additionalGuests.map((guest, index) => {
+          {data.additionalGuests?.map((guest, index) => {
             return (
               <GuestSection
                 key={index}
@@ -289,19 +289,19 @@ function Form({ formRef }) {
           {/* ADD GUEST SECTION  */}
           <div
             onClick={() => {
-              if (data.additionalGuests.length <= 4) {
+              if (data.additionalGuests?.length <= 4) {
                 const temp = JSON.parse(JSON.stringify(data));
                 const tempErrorMessageTracking = JSON.parse(
                   JSON.stringify(errorMessageTracking)
                 );
 
-                temp.additionalGuests.push({
+                temp.additionalGuests?.push({
                   ...emptyDataStructure,
-                  id: data.additionalGuests.length,
+                  id: data.additionalGuests?.length,
                 });
-                tempErrorMessageTracking.additionalGuests.push({
+                tempErrorMessageTracking.additionalGuests?.push({
                   ...emptyDataStructure,
-                  id: errorMessageTracking.additionalGuests.length,
+                  id: errorMessageTracking.additionalGuests?.length,
                 });
                 setData(temp);
                 setErrorMessageTracking(tempErrorMessageTracking);
