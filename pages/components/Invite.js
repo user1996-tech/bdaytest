@@ -15,19 +15,19 @@ function Invite({ formRef }) {
 
         <div className="text-center">
           <p className="text-white font-Forum text-[35px]">
-            18 November 2022 - 6pm
+            19 November 2022 - 6pm
           </p>
         </div>
 
         <div
-          className="bg-[#ffffff70] flex flex-row rounded-lg p-3 cursor-pointer group hover:bg-[#9C814D95] transition ease-in-out duration-500  "
+          className="bg-[#ffffff70] flex flex-col md:flex-row rounded-lg p-3 cursor-pointer group hover:bg-[#9C814D95] transition ease-in-out duration-500  "
           onClick={() => {
             window.location.assign(
               "https://www.google.com/maps/place/CLAY+-+Cocktails+%26+Cuisine/@10.8075637,106.7410537,17.01z/data=!4m5!3m4!1s0x31752752280eca6d:0x7254050ac6326a17!8m2!3d10.8075446!4d106.7410753"
             );
           }}
         >
-          <div>
+          <div className="hidden md:block">
             <img
               src="restaurant.png"
               className="w-[200px] h-[200px] rounded-lg"

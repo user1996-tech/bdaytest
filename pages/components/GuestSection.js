@@ -33,7 +33,7 @@ function GuestSection({
   }
 
   return (
-    <div className="pt-5">
+    <div>
       {number != "main" && (
         <div className="text-center my-1">
           <p className="italic text-sm">Additional guest {number + 1}</p>
@@ -57,7 +57,7 @@ function GuestSection({
               if (number == "main") {
                 temp.mainGuest.firstName = event.target.value;
               } else {
-                temp.additionalGuests[number]?.firstName = event.target.value;
+                temp.additionalGuests[number].firstName = event.target.value;
               }
 
               setData(temp);
@@ -80,7 +80,7 @@ function GuestSection({
               if (number == "main") {
                 temp.mainGuest.lastName = event.target.value;
               } else {
-                temp.additionalGuests[number]?.lastName = event.target.value;
+                temp.additionalGuests[number].lastName = event.target.value;
               }
 
               setData(temp);
@@ -104,7 +104,7 @@ function GuestSection({
             if (number == "main") {
               temp.mainGuest.notes = event.target.value;
             } else {
-              temp.additionalGuests[number]?.notes = event.target.value;
+              temp.additionalGuests[number].notes = event.target.value;
             }
 
             setData(temp);
@@ -131,6 +131,10 @@ function GuestSection({
               ),
               1
             );
+
+            console.log(temp);
+            console.log(tempErrorMessageTracking);
+
             setData(temp);
             setErrorMessageTracking(tempErrorMessageTracking);
             setErrorMessage([""]);

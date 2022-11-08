@@ -186,6 +186,27 @@ function Form({ formRef }) {
     }
   };
 
+  // useEffect(() => {
+  //   const testArray = [
+  //     { id: 0, name: "zero" },
+  //     { id: 1, name: "one" },
+  //     { id: 2, name: "two" },
+  //     { id: 3, name: "three" },
+  //     { id: 4, name: "four" },
+  //     { id: 5, name: "five" },
+  //   ];
+  //   console.log("before", JSON.stringify(testArray));
+  //   console.log("before", JSON.stringify(testArray[3]));
+
+  //   testArray.splice(
+  //     testArray.findIndex((item) => item.id == 3),
+  //     1
+  //   );
+
+  //   console.log("after", JSON.stringify(testArray));
+  //   console.log("after", JSON.stringify(testArray[3]));
+  // }, []);
+
   return (
     <div
       className="h-screen bg-[#031934] w-full flex flex-col items-centers py-5"
@@ -193,7 +214,7 @@ function Form({ formRef }) {
       ref={formRef}
     >
       <ToastContainer />
-      <div className="border-[#DCB974] border-2 rounded-lg justify-center mx-auto py-5 max-h-screen overflow-y-scroll text-white px-5 scrollbar-thin scrollbar-thumb-[#DCB974]/40 scrollbar-track-[#031934]/40 ">
+      <div className="border-[#DCB974] border-2 rounded-lg justify-center mx-auto py-5 max-h-screen overflow-y-scroll text-white px-5 scrollbar-thin scrollbar-thumb-[#DCB974]/40 scrollbar-track-[#031934]/40 max-w-full">
         <form onSubmit={handleSubmit} className="">
           {/* WILL YOU BE JOINING US SECTION  */}
           <div className="flex flex-col space-y-5">
@@ -275,7 +296,8 @@ function Form({ formRef }) {
             return (
               <GuestSection
                 key={index}
-                number={guest.id}
+                // number={guest.id}
+                number={index}
                 data={data}
                 setData={setData}
                 errorMessage={errorMessage}
