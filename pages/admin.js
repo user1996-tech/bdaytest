@@ -4,7 +4,7 @@ import { getFirestore } from "firebase/firestore";
 import { collection, addDoc } from "firebase/firestore";
 import { useCollection } from "react-firebase-hooks/firestore";
 
-function admin() {
+function Admin() {
   const [data, dataLoadin, dataError] = useCollection(
     collection(getFirestore(app), "guestList")
   );
@@ -66,4 +66,4 @@ function admin() {
   );
 }
 
-export default admin;
+export default Admin;
