@@ -33,7 +33,7 @@ function GuestSection({
   }
 
   return (
-    <div>
+    <div className="pt-5">
       {number != "main" && (
         <div className="text-center my-1">
           <p className="italic text-sm">Additional guest {number + 1}</p>
