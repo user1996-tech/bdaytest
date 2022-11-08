@@ -46,7 +46,7 @@ function Invite({ formRef }) {
         <div
           className="bg-[#ffffff95] py-3 px-5 cursor-pointer rounded-lg hover:bg-[#9C814D95] group transition ease-in-out duration-500 mt-5 inline-block "
           onClick={() => {
-            formRef.current.scrollIntoView({ behaviour: "smooth" });
+            formRef.current.scrollIntoView({ behavior: "smooth" });
           }}
         >
           <p className="group-hover:text-white">RSVP Now</p>

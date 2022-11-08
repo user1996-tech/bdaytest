@@ -73,13 +73,14 @@ export default async (req, res) => {
               }
 
               //   to do
+              // responsiv design
               // check if firstName, lastName, and email exist
-              // trim
-              // update edditedAt time
-              // strip spaces before API call
-              // admin page
-              // how to send link
-              // firebase switch over or find online MySql server
+              // update edditedAt time --> MAYBE
+
+              // admin page --> CAN WAIT
+
+              // strip spaces before API call, trim --> DONE
+              // firebase switch over or find online MySql server --> DONE
               // insert additional guest entries --> DONE
               // popup to string ---> DONE
 

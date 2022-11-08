@@ -1,4 +1,7 @@
 import { useEffect, useState } from "react";
+import { app } from "../../firebase/clientApp";
+import { getFirestore } from "firebase/firestore";
+import { collection, addDoc } from "firebase/firestore";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import GuestSection from "./GuestSection";
@@ -10,13 +13,14 @@ import {
 } from "../../GLOBAL";
 
 function Form({ formRef }) {
+  const db = getFirestore(app);
   const [data, setData] = useState(JSON.parse(JSON.stringify(dataTemplate)));
   const [errorMessage, setErrorMessage] = useState([""]);
   const [errorMessageTracking, setErrorMessageTracking] = useState(
     JSON.parse(JSON.stringify(dataTemplate))
   );
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
 
     // Error handling
@@ -88,45 +92,97 @@ function Form({ formRef }) {
 
     if (tempErrorMessage.length == 0) {
       console.log("success");
-      console.log(JSON.stringify(data));
-      fetch("/api/add", {
-        method: "POST",
-        mode: "cors",
-        credentials: "same-origin",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(data),
-      })
-        .then((response) => response.json())
-        .then((res) => {
-          console.log(res);
-          if (res.status == "success") {
-            toast.success("Results submitted. Thank you.", {
-              position: "top-right",
-              autoClose: 5000,
-              hideProgressBar: false,
-              closeOnClick: true,
-              pauseOnHover: true,
-              draggable: true,
-              progress: undefined,
-              theme: "colored",
-            });
+      // console.log(JSON.stringify(data));
+      // fetch("/api/FBadd", {
+      //   method: "POST",
+      //   mode: "cors",
+      //   credentials: "same-origin",
+      //   headers: {
+      //     "Content-Type": "application/json",
+      //   },
+      //   body: JSON.stringify(data),
+      // })
+      //   .then((response) => response.json())
+      //   .then((res) => {
+      //     console.log(res);
+      //     if (res.status == "success") {
+      //       toast.success("Results submitted. Thank you.", {
+      //         position: "top-right",
+      //         autoClose: 5000,
+      //         hideProgressBar: false,
+      //         closeOnClick: true,
+      //         pauseOnHover: true,
+      //         draggable: true,
+      //         progress: undefined,
+      //         theme: "colored",
+      //       });
 
-            // setData(JSON.parse(JSON.stringify(dataTemplate)));
-          } else {
-            toast.error("Something went wrong", {
-              position: "top-right",
-              autoClose: 5000,
-              hideProgressBar: false,
-              closeOnClick: true,
-              pauseOnHover: true,
-              draggable: true,
-              progress: undefined,
-              theme: "colored",
-            });
-          }
+      //       // setData(JSON.parse(JSON.stringify(dataTemplate)));
+      //     } else {
+      //       toast.error("Something went wrong", {
+      //         position: "top-right",
+      //         autoClose: 5000,
+      //         hideProgressBar: false,
+      //         closeOnClick: true,
+      //         pauseOnHover: true,
+      //         draggable: true,
+      //         progress: undefined,
+      //         theme: "colored",
+      //       });
+      //     }
+      //   });
+
+      var docRefArray = [];
+      var temp = "";
+      temp = await addDoc(collection(db, "guestList"), {
+        firstName: data.mainGuest.firstName.trim(),
+        lastName: data.mainGuest.lastName.trim(),
+        email: data.contactEmail.trim(),
+        notes: data.mainGuest.notes.trim(),
+        attending: data.attending.trim(),
+      });
+      docRefArray.push(temp?.id);
+
+      if (data.additionalGuests.length != 0) {
+        console.log("in 1");
+        for (var i = 0; i < data.additionalGuests.length; i++) {
+          console.log("in 2");
+          temp = await addDoc(collection(db, "guestList"), {
+            firstName: data.additionalGuests[i].firstName.trim(),
+            lastName: data.additionalGuests[i].lastName.trim(),
+            email: data.contactEmail.trim(),
+            notes: data.additionalGuests[i].notes.trim(),
+            attending: data.attending.trim(),
+          });
+          docRefArray.push(temp?.id);
+          temp = "";
+        }
+      }
+      console.log(docRefArray);
+      if (!docRefArray.includes("")) {
+        toast.success("Results submitted. Thank you.", {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "colored",
         });
+        setData(JSON.parse(JSON.stringify(dataTemplate)));
+      } else {
+        toast.error("Something went wrong", {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "colored",
+        });
+      }
     }
   };
 
@@ -158,18 +214,32 @@ function Form({ formRef }) {
                   setData({ ...data, attending: "Y" });
                 }}
               >
-                <p className="text-green-500 group-hover:text-white">Yes</p>
+                <p
+                  className="text-green-500 group-hover:text-white"
+                  style={{
+                    color: data.attending == "Y" ? "white" : "",
+                  }}
+                >
+                  Yes
+                </p>
               </div>
               <div
                 className="cursor-pointer w-[50%] text-center border-2 rounded-lg py-2 border-red-500 group hover:bg-red-500"
                 style={{
-                  backgroundColor: data.attending == "N" ? "red" : "",
+                  backgroundColor: data.attending == "N" ? "#EF4444" : "",
                 }}
                 onClick={() => {
                   setData({ ...data, attending: "N" });
                 }}
               >
-                <p className="text-red-500 group-hover:text-white">No</p>
+                <p
+                  className="text-red-500 group-hover:text-white"
+                  style={{
+                    color: data.attending == "N" ? "white" : "",
+                  }}
+                >
+                  No
+                </p>
               </div>
             </div>
           </div>
@@ -201,9 +271,10 @@ function Form({ formRef }) {
             setErrorMessageTracking={setErrorMessageTracking}
           />
 
-          {data.additionalGuests.map((guest) => {
+          {data.additionalGuests.map((guest, index) => {
             return (
               <GuestSection
+                key={index}
                 number={guest.id}
                 data={data}
                 setData={setData}
@@ -245,8 +316,8 @@ function Form({ formRef }) {
 
           {/* ERROR MESSAGE SECTION */}
           <div className="px-2">
-            {errorMessage.map((error) => (
-              <div>
+            {errorMessage.map((error, index) => (
+              <div key={index}>
                 {/* <FaBeer /> */}
                 <p className="text-red-500">{error}</p>
               </div>

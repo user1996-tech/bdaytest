@@ -1,16 +1,28 @@
 import React, { useEffect, useState } from "react";
+import { app } from "../firebase/clientApp";
+import { getFirestore } from "firebase/firestore";
+import { collection, addDoc } from "firebase/firestore";
+import { useCollection } from "react-firebase-hooks/firestore";
 
 function admin() {
-  const [data, setData] = useState([]);
-  useEffect(() => {
-    // fecth API data
-    fetch("/api/get")
-      .then((response) => response.json())
-      .then((res) => {
-        console.log(res);
-        setData(res);
-      });
-  }, []);
+  const [data, dataLoadin, dataError] = useCollection(
+    collection(getFirestore(app), "guestList")
+  );
+
+  // const [data, setData] = useState([]);
+  // useEffect(() => {
+  //   // fecth API data -> MYSQL
+  //   fetch("/api/get")
+  //     .then((response) => response.json())
+  //     .then((res) => {
+  //       console.log(res);
+  //       setData(res);
+  //     });
+  // }, []);
+
+  // useEffect(() => {
+  //   // fetch API data -> Firebase
+  // }, []);
 
   return (
     <div className="w-full h-screen bg-[#031934] flex justify-center">
@@ -36,28 +48,14 @@ function admin() {
             </tr>
           </thead>
           <tbody>
-            {/* <tr className="odd:bg-[#F6F6F6]">
-              <td className="text-center">1</td>
-              <td className="text-center">Austin</td>
-              <td className="text-center">Loh</td>
-              <td className="text-center">madeinsg3@gmail.com</td>
-              <td className="text-center">Y</td>
-            </tr>
-            <tr className="even:bg-white">
-              <td className="text-center">1</td>
-              <td className="text-center">Austin</td>
-              <td className="text-center">Loh</td>
-              <td className="text-center">madeinsg3@gmail.com</td>
-              <td className="text-center">Y</td>
-            </tr> */}
-            {data.map((item) => {
+            {data?.docs.map((item, index) => {
               return (
                 <tr className="even:bg-white odd:bg-[#F6F6F6]">
-                  <td className="text-center">{item.gid}</td>
-                  <td className="text-center">{item.firstName}</td>
-                  <td className="text-center">{item.lastName}</td>
-                  <td className="text-center">{item.email}</td>
-                  <td className="text-center">{item.attending}</td>
+                  <td className="text-center">{index + 1}</td>
+                  <td className="text-center">{item.data().firstName}</td>
+                  <td className="text-center">{item.data().lastName}</td>
+                  <td className="text-center">{item.data().email}</td>
+                  <td className="text-center">{item.data().attending}</td>
                 </tr>
               );
             })}
