@@ -35,17 +35,17 @@ function GuestSection({
   return (
     <div>
       {number != "main" && (
-        <div className="text-center">
-          <p className="">Additional guest {number + 1}</p>
+        <div className="text-center my-1">
+          <p className="italic text-sm">Additional guest {number + 1}</p>
         </div>
       )}
 
       <div className="flex flex-row space-x-5">
         <div className="text-center">
-          <p>First Name</p>
+          <p>First Name * </p>
           <input
             type="text"
-            className="text-black border-red-400"
+            className="text-black border-red-400 rounded-sm outline-none px-1"
             style={firstNameStyle}
             value={
               number == "main"
@@ -65,10 +65,10 @@ function GuestSection({
           />
         </div>
         <div className="text-center">
-          <p>Last Name</p>
+          <p>Last Name * </p>
           <input
             type="text"
-            className="text-black border-red-400"
+            className="text-black border-red-400 rounded-sm outline-none px-1"
             style={lastNameStyle}
             value={
               number == "main"
@@ -92,7 +92,8 @@ function GuestSection({
       <div className="text-center">
         <p>Notes</p>
         <textarea
-          className="w-full text-black"
+          className="w-full text-black rounded-sm placeholder:text-sm placeholder:px-1 outline-none px-1"
+          placeholder="Dietary requirements and sepcial needs, if any"
           value={
             number == "main"
               ? data.mainGuest.notes
@@ -113,7 +114,7 @@ function GuestSection({
 
       {number != "main" && (
         <div
-          className="text-center py-2 border-2 rounded-lg"
+          className="text-center py-2 border-2 rounded-lg border-red-500 cursor-pointer mt-3 hover:bg-red-500 group"
           onClick={() => {
             var temp = JSON.parse(JSON.stringify(data));
             temp.additionalGuests.splice(
@@ -135,7 +136,7 @@ function GuestSection({
             setErrorMessage([""]);
           }}
         >
-          <p>Remove Guest</p>
+          <p className="text-red-500 group-hover:text-white">Remove Guest</p>
         </div>
       )}
     </div>

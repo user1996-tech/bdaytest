@@ -17,10 +17,10 @@ const dataTemplate = {
 };
 
 const errorMessageTypes = {
-  attending: "Please let us know if you'll be joining",
-  email: "Invalid contact email",
-  firstName: "First Name needed",
-  lastName: "Last Name needed",
+  attending: "- Please let us know if you'll be joining",
+  email: "- Invalid contact email",
+  firstName: "- First Name needed",
+  lastName: "- Last Name needed",
 };
 
 const validateEmail = (email) => {

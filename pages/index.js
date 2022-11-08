@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import GuestSection from "./components/GuestSection";
 import { ToastContainer, toast } from "react-toastify";
+// import { GoPrimitiveDot } from "react-icons/";
+import { FaBeer } from "react-icons/fa";
 import {
   emptyDataStructure,
   errorMessageTypes,
@@ -11,7 +13,7 @@ import "react-toastify/dist/ReactToastify.css";
 
 export default function Home() {
   const [data, setData] = useState(JSON.parse(JSON.stringify(dataTemplate)));
-  const [errorMessage, setErrorMessage] = useState(["error message"]);
+  const [errorMessage, setErrorMessage] = useState([""]);
   const [errorMessageTracking, setErrorMessageTracking] = useState(
     JSON.parse(JSON.stringify(dataTemplate))
   );
@@ -194,10 +196,10 @@ export default function Home() {
         </div>
 
         <div className="h-screen bg-[#031934] w-full flex flex-col items-centers">
-          <div className="border-[#DCB974] border-2 rounded-lg flex justify-center mx-auto py-5 max-h-screen overflow-y-auto text-white">
-            <form onSubmit={handleSubmit} className="space-y-5">
+          <div className="border-[#DCB974] border-2 rounded-lg flex justify-center mx-auto py-5 max-h-screen overflow-y-scroll text-white px-5 scrollbar-thin scrollbar-thumb-[#DCB974]/40 scrollbar-track-[#031934]/40 ">
+            <form onSubmit={handleSubmit} className="space-y-10">
               <div className="flex flex-col space-y-5">
-                <p className="text-center">Will you be joining us?</p>
+                <p className="text-center">Will you be joining us ? * </p>
                 <div
                   className="flex flex-row space-x-5 border-red-500 rounded-lg"
                   style={{
@@ -206,18 +208,18 @@ export default function Home() {
                   }}
                 >
                   <div
-                    className="cursor-pointer w-[50%] text-center border-2 rounded-lg py-2"
+                    className="cursor-pointer w-[50%] text-center border-2 rounded-lg py-2 border-green-500 group hover:bg-green-500"
                     style={{
-                      backgroundColor: data.attending == "Y" ? "green" : "",
+                      backgroundColor: data.attending == "Y" ? "#23C55E" : "",
                     }}
                     onClick={() => {
                       setData({ ...data, attending: "Y" });
                     }}
                   >
-                    <p className="">Yes</p>
+                    <p className="text-green-500 group-hover:text-white">Yes</p>
                   </div>
                   <div
-                    className="cursor-pointer w-[50%] text-center border-2 rounded-lg py-2"
+                    className="cursor-pointer w-[50%] text-center border-2 rounded-lg py-2 border-red-500 group hover:bg-red-500"
                     style={{
                       backgroundColor: data.attending == "N" ? "red" : "",
                     }}
@@ -225,15 +227,15 @@ export default function Home() {
                       setData({ ...data, attending: "N" });
                     }}
                   >
-                    <p className="">No</p>
+                    <p className="text-red-500 group-hover:text-white">No</p>
                   </div>
                 </div>
               </div>
               <div className="text-center">
-                <p className="">Contact Email</p>
+                <p className="">Contact Email * </p>
                 <input
                   type="text"
-                  className="w-full text-black border-red-400"
+                  className="w-full text-black border-red-400 rounded-sm"
                   style={{
                     borderWidth:
                       errorMessageTracking.contactEmail == "Y" ? "2px" : "0px",
@@ -291,21 +293,27 @@ export default function Home() {
                     setErrorMessage("maximum of 4 additional guests");
                   }
                 }}
-                className="cursor-pointer border-2 py-2 rounded-lg text-center"
+                className="cursor-pointer border-2 py-2 rounded-lg text-center border-blue-500 group hover:bg-blue-500"
               >
-                <p> Add guest</p>
+                <p className="text-blue-500 group-hover:text-white">
+                  {" "}
+                  Add guest
+                </p>
               </div>
 
-              <div className="">
+              <div className="px-2">
                 {errorMessage.map((error) => (
-                  <p>{error}</p>
+                  <div>
+                    {/* <FaBeer /> */}
+                    <p className="text-red-500">{error}</p>
+                  </div>
                 ))}
               </div>
 
               <input
                 type="submit"
                 value="Confirm"
-                className="text-center border-2 rounded-lg cursor-pointer py-2 w-full"
+                className="text-center border-2 rounded-lg cursor-pointer py-2 w-full border-[#DCB974] text-[#DCB974] hover:bg-[#DCB974] hover:text-white"
               />
             </form>
           </div>

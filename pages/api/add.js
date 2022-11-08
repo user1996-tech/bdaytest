@@ -74,12 +74,13 @@ export default async (req, res) => {
 
               //   to do
               // check if firstName, lastName, and email exist
+              // trim
               // update edditedAt time
-              // insert additional guest entries --> DOING
               // strip spaces before API call
               // admin page
               // how to send link
               // firebase switch over or find online MySql server
+              // insert additional guest entries --> DONE
               // popup to string ---> DONE
 
               result.DBresponse = JSON.stringify(DBresponse);
