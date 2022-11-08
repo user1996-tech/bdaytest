@@ -16,3 +16,8 @@
   font-family: "Forum";
   src: url("/fonts/Forum-Regular.ttf");
 }
+
+@font-face {
+  font-family: "PublicSans";
+  src: url("/fonts/PublicSans-Regular.ttf");
+}

@@ -12,6 +12,7 @@ module.exports = {
         DancingScript: ["DancingScript"],
         GreatVibes: ["GreatVibes"],
         Forum: ["Forum"],
+        PublicSans: ["PublicSans"],
       },
     },
   },
