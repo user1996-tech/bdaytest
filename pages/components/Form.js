@@ -122,7 +122,7 @@ function Form({ formRef }) {
       ref={formRef}
     >
       <ToastContainer />
-      <div className="border-[#DCB974] border-2 rounded-lg justify-center mx-auto py-5 max-h-screen overflow-y-scroll text-white px-5 scrollbar-thin scrollbar-thumb-[#DCB974]/40 scrollbar-track-[#031934]/40 max-w-full">
+      <div className="border-[#DCB974] border-2 rounded-lg justify-center mx-auto py-5 max-h-screen overflow-y-scroll text-white px-5 scrollbar-thin scrollbar-thumb-[#DCB974]/40 scrollbar-track-[#031934]/40 scrollbar-thumb-rounded max-w-full w-[90%] md:w-auto">
         <form onSubmit={handleSubmit} className="">
           {/* WILL YOU BE JOINING US SECTION  */}
           <div className="flex flex-col space-y-5">
@@ -190,20 +190,22 @@ function Form({ formRef }) {
             />
           </div>
 
-          {data.guests?.map((guest, index) => {
-            return (
-              <GuestSection
-                key={index}
-                number={index}
-                data={data}
-                setData={setData}
-                errorMessage={errorMessage}
-                setErrorMessage={setErrorMessage}
-                errorMessageTracking={errorMessageTracking}
-                setErrorMessageTracking={setErrorMessageTracking}
-              />
-            );
-          })}
+          <div className="flex flex-col space-y-6">
+            {data.guests?.map((guest, index) => {
+              return (
+                <GuestSection
+                  key={index}
+                  number={index}
+                  data={data}
+                  setData={setData}
+                  errorMessage={errorMessage}
+                  setErrorMessage={setErrorMessage}
+                  errorMessageTracking={errorMessageTracking}
+                  setErrorMessageTracking={setErrorMessageTracking}
+                />
+              );
+            })}
+          </div>
 
           {/* ADD GUEST SECTION  */}
           <div

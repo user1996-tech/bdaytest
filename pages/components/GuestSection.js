@@ -24,16 +24,16 @@ function GuestSection({
     <div>
       {number != "0" && (
         <div className="text-center my-1">
-          <p className="italic text-sm">Additional guest {number + 1}</p>
+          <p className="italic text-sm">Additional guest {number}</p>
         </div>
       )}
 
-      <div className="flex flex-row space-x-5">
+      <div className="flex flex-col md:flex-row space-x-0 md:space-x-5">
         <div className="text-center">
           <p>First Name * </p>
           <input
             type="text"
-            className="text-black border-red-400 rounded-sm outline-none px-1"
+            className="text-black border-red-400 rounded-sm outline-none px-1 w-full md:w-auto"
             style={firstNameStyle}
             value={data?.guests[number].firstName}
             onChange={(event) => {
@@ -48,7 +48,7 @@ function GuestSection({
           <p>Last Name * </p>
           <input
             type="text"
-            className="text-black border-red-400 rounded-sm outline-none px-1"
+            className="text-black border-red-400 rounded-sm outline-none px-1 w-full md:w-auto"
             style={lastNameStyle}
             value={data?.guests[number].lastName}
             onChange={(event) => {
