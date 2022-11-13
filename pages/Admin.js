@@ -28,20 +28,6 @@ function Admin() {
       setData(all);
     }
   }, [all, notAttending, attending, selected]);
-  // const [data, setData] = useState([]);
-  // useEffect(() => {
-  //   // fecth API data -> MYSQL
-  //   fetch("/api/get")
-  //     .then((response) => response.json())
-  //     .then((res) => {
-  //       console.log(res);
-  //       setData(res);
-  //     });
-  // }, []);
-
-  // useEffect(() => {
-  //   // fetch API data -> Firebase
-  // }, []);
 
   return (
     <div className="w-full h-screen bg-[#031934] flex items-center flex-col py-5">

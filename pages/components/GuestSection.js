@@ -12,29 +12,17 @@ function GuestSection({
   var firstNameStyle = { borderWidth: "0px" };
   var lastNameStyle = { borderWidth: "0px" };
 
-  if (number == "main") {
-    if (errorMessageTracking.mainGuest.firstName == "Y") {
-      firstNameStyle = { borderWidth: "2px" };
-    }
-  } else {
-    if (errorMessageTracking.additionalGuests[number]?.firstName == "Y") {
-      firstNameStyle = { borderWidth: "2px" };
-    }
+  if (errorMessageTracking?.guests[number]?.lastName == "Y") {
+    lastNameStyle = { borderWidth: "2px" };
   }
 
-  if (number == "main") {
-    if (errorMessageTracking.mainGuest.lastName == "Y") {
-      lastNameStyle = { borderWidth: "2px" };
-    }
-  } else {
-    if (errorMessageTracking.additionalGuests[number]?.lastName == "Y") {
-      lastNameStyle = { borderWidth: "2px" };
-    }
+  if (errorMessageTracking?.guests[number]?.fristName == "Y") {
+    lastNameStyle = { borderWidth: "2px" };
   }
 
   return (
     <div>
-      {number != "main" && (
+      {number != "0" && (
         <div className="text-center my-1">
           <p className="italic text-sm">Additional guest {number + 1}</p>
         </div>
@@ -47,18 +35,10 @@ function GuestSection({
             type="text"
             className="text-black border-red-400 rounded-sm outline-none px-1"
             style={firstNameStyle}
-            value={
-              number == "main"
-                ? data.mainGuest.firstName
-                : data.additionalGuests[number]?.firstName
-            }
+            value={data?.guests[number].firstName}
             onChange={(event) => {
               const temp = JSON.parse(JSON.stringify(data));
-              if (number == "main") {
-                temp.mainGuest.firstName = event.target.value;
-              } else {
-                temp.additionalGuests[number].firstName = event.target.value;
-              }
+              temp.guests[number].firstName = event.target.value;
 
               setData(temp);
             }}
@@ -70,18 +50,10 @@ function GuestSection({
             type="text"
             className="text-black border-red-400 rounded-sm outline-none px-1"
             style={lastNameStyle}
-            value={
-              number == "main"
-                ? data.mainGuest.lastName
-                : data.additionalGuests[number]?.lastName
-            }
+            value={data?.guests[number].lastName}
             onChange={(event) => {
               const temp = JSON.parse(JSON.stringify(data));
-              if (number == "main") {
-                temp.mainGuest.lastName = event.target.value;
-              } else {
-                temp.additionalGuests[number].lastName = event.target.value;
-              }
+              temp.guests[number].lastName = event.target.value;
 
               setData(temp);
             }}
@@ -94,45 +66,29 @@ function GuestSection({
         <textarea
           className="w-full text-black rounded-sm placeholder:text-sm placeholder:px-1 outline-none px-1"
           placeholder="Dietary requirements and sepcial needs, if any"
-          value={
-            number == "main"
-              ? data.mainGuest.notes
-              : data.additionalGuests[number]?.notes
-          }
+          value={data?.guests[number].notes}
           onChange={(event) => {
             const temp = JSON.parse(JSON.stringify(data));
-            if (number == "main") {
-              temp.mainGuest.notes = event.target.value;
-            } else {
-              temp.additionalGuests[number].notes = event.target.value;
-            }
+            temp.guests[number].notes = event.target.value;
 
             setData(temp);
           }}
         />
       </div>
 
-      {number != "main" && (
+      {number != "0" && (
         <div
           className="text-center py-2 border-2 rounded-lg border-red-500 cursor-pointer mt-3 hover:bg-red-500 group"
           onClick={() => {
             var temp = JSON.parse(JSON.stringify(data));
-            temp.additionalGuests.splice(
-              temp.additionalGuests.findIndex((item) => item.id == number),
-              1
-            );
+            temp.guests.splice(number, 1);
 
             var tempErrorMessageTracking = JSON.parse(
               JSON.stringify(errorMessageTracking)
             );
-            tempErrorMessageTracking.additionalGuests.splice(
-              tempErrorMessageTracking.additionalGuests.findIndex(
-                (item) => item.id == number
-              ),
-              1
-            );
+            tempErrorMessageTracking.guests.splice(number, 1);
 
-            console.log(temp);
+            // console.log(temp);
             console.log(tempErrorMessageTracking);
 
             setData(temp);

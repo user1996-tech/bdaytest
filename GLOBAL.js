@@ -5,6 +5,12 @@ const emptyDataStructure = {
   notes: "",
 };
 
+const newEmptyDataStructure = {
+  firstName: "",
+  lastName: "",
+  notes: "",
+};
+
 const dataTemplate = {
   attending: "",
   contactEmail: "",
@@ -14,6 +20,18 @@ const dataTemplate = {
     notes: "",
   },
   additionalGuests: [],
+};
+
+const newDataTemplate = {
+  attending: "",
+  contactEmail: "",
+  guests: [
+    {
+      firstName: "",
+      lastName: "",
+      notes: "",
+    },
+  ],
 };
 
 const errorMessageTypes = {
@@ -31,4 +49,11 @@ const validateEmail = (email) => {
     );
 };
 
-export { emptyDataStructure, errorMessageTypes, dataTemplate, validateEmail };
+export {
+  emptyDataStructure,
+  errorMessageTypes,
+  dataTemplate,
+  validateEmail,
+  newDataTemplate,
+  newEmptyDataStructure,
+};

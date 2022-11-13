@@ -6,18 +6,19 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import GuestSection from "./GuestSection";
 import {
-  emptyDataStructure,
+  newEmptyDataStructure,
   errorMessageTypes,
-  dataTemplate,
+  newDataTemplate,
   validateEmail,
+  dataTemplate,
 } from "../../GLOBAL";
 
 function Form({ formRef }) {
   const db = getFirestore(app);
-  const [data, setData] = useState(JSON.parse(JSON.stringify(dataTemplate)));
+  const [data, setData] = useState(JSON.parse(JSON.stringify(newDataTemplate)));
   const [errorMessage, setErrorMessage] = useState([""]);
   const [errorMessageTracking, setErrorMessageTracking] = useState(
-    JSON.parse(JSON.stringify(dataTemplate))
+    JSON.parse(JSON.stringify(newDataTemplate))
   );
 
   const handleSubmit = async (event) => {
@@ -44,46 +45,24 @@ function Form({ formRef }) {
       tempErrorMessageTracking.contactEmail = "N";
     }
 
-    if (data.mainGuest.firstName == "") {
-      // tempErrorMessage.push(errorMessageTypes.firstName);
-      if (!tempErrorMessage.includes(errorMessageTypes.firstName)) {
-        tempErrorMessage.push(errorMessageTypes.firstName);
-      }
-      tempErrorMessageTracking.mainGuest.firstName = "Y";
-    } else {
-      tempErrorMessageTracking.mainGuest.firstName = "N";
-    }
-
-    if (data.mainGuest.lastName == "") {
-      // tempErrorMessage.push(errorMessageTypes.lastName);
-      if (!tempErrorMessage.includes(errorMessageTypes.lastName)) {
-        tempErrorMessage.push(errorMessageTypes.lastName);
-      }
-      tempErrorMessageTracking.mainGuest.lastName = "Y";
-    } else {
-      tempErrorMessageTracking.mainGuest.lastName = "N";
-    }
-
-    if (data.additionalGuests?.length != 0) {
-      for (var i = 0; i < data.additionalGuests?.length; i++) {
-        // check firstName
-        if (data.additionalGuests[i].firstName == "") {
-          if (!tempErrorMessage.includes(errorMessageTypes.firstName)) {
-            tempErrorMessage.push(errorMessageTypes.firstName);
-          }
-          tempErrorMessageTracking.additionalGuests[i].firstName = "Y";
-        } else {
-          tempErrorMessageTracking.additionalGuests[i].firstName = "N";
+    for (var i = 0; i < data.guests.length; i++) {
+      // check firstName
+      if (data.guests[i].firstName == "") {
+        if (!tempErrorMessage.includes(errorMessageTypes.firstName)) {
+          tempErrorMessage.push(errorMessageTypes.firstName);
         }
-        // check lastName
-        if (data.additionalGuests[i].lastName == "") {
-          if (!tempErrorMessage.includes(errorMessageTypes.lastName)) {
-            tempErrorMessage.push(errorMessageTypes.lastName);
-          }
-          tempErrorMessageTracking.additionalGuests[i].lastName = "Y";
-        } else {
-          tempErrorMessageTracking.additionalGuests[i].lastName = "N";
+        tempErrorMessageTracking.guests[i].firstName = "Y";
+      } else {
+        tempErrorMessageTracking.guests[i].firstName = "N";
+      }
+      // check lastName
+      if (data.guests[i].lastName == "") {
+        if (!tempErrorMessage.includes(errorMessageTypes.lastName)) {
+          tempErrorMessage.push(errorMessageTypes.lastName);
         }
+        tempErrorMessageTracking.guests[i].lastName = "Y";
+      } else {
+        tempErrorMessageTracking.guests[i].lastName = "N";
       }
     }
 
@@ -92,73 +71,23 @@ function Form({ formRef }) {
 
     if (tempErrorMessage.length == 0) {
       console.log("success");
-      // console.log(JSON.stringify(data));
-      // fetch("/api/FBadd", {
-      //   method: "POST",
-      //   mode: "cors",
-      //   credentials: "same-origin",
-      //   headers: {
-      //     "Content-Type": "application/json",
-      //   },
-      //   body: JSON.stringify(data),
-      // })
-      //   .then((response) => response.json())
-      //   .then((res) => {
-      //     console.log(res);
-      //     if (res.status == "success") {
-      //       toast.success("Results submitted. Thank you.", {
-      //         position: "top-right",
-      //         autoClose: 5000,
-      //         hideProgressBar: false,
-      //         closeOnClick: true,
-      //         pauseOnHover: true,
-      //         draggable: true,
-      //         progress: undefined,
-      //         theme: "colored",
-      //       });
-
-      //       // setData(JSON.parse(JSON.stringify(dataTemplate)));
-      //     } else {
-      //       toast.error("Something went wrong", {
-      //         position: "top-right",
-      //         autoClose: 5000,
-      //         hideProgressBar: false,
-      //         closeOnClick: true,
-      //         pauseOnHover: true,
-      //         draggable: true,
-      //         progress: undefined,
-      //         theme: "colored",
-      //       });
-      //     }
-      //   });
+      console.log(JSON.stringify(data));
 
       var docRefArray = [];
       var temp = "";
-      temp = await addDoc(collection(db, "guestList"), {
-        firstName: data.mainGuest.firstName.trim(),
-        lastName: data.mainGuest.lastName.trim(),
-        email: data.contactEmail.trim(),
-        notes: data.mainGuest.notes.trim(),
-        attending: data.attending.trim(),
-      });
-      docRefArray.push(temp?.id);
 
-      if (data.additionalGuests?.length != 0) {
-        console.log("in 1");
-        for (var i = 0; i < data.additionalGuests?.length; i++) {
-          console.log("in 2");
-          temp = await addDoc(collection(db, "guestList"), {
-            firstName: data.additionalGuests[i].firstName.trim(),
-            lastName: data.additionalGuests[i].lastName.trim(),
-            email: data.contactEmail.trim(),
-            notes: data.additionalGuests[i].notes.trim(),
-            attending: data.attending.trim(),
-          });
-          docRefArray.push(temp?.id);
-          temp = "";
-        }
+      for (var i = 0; i < data.guests.length; i++) {
+        temp = await addDoc(collection(db, "guestList"), {
+          firstName: data.guests[i].firstName.trim(),
+          lastName: data.guests[i].lastName.trim(),
+          notes: data.guests[i].notes.trim(),
+          attending: data.attending,
+          email: data.contactEmail.trim(),
+        });
+        docRefArray.push(temp?.id);
+        temp = "";
       }
-      console.log(docRefArray);
+
       if (!docRefArray.includes("")) {
         toast.success("Results submitted. Thank you.", {
           position: "top-right",
@@ -170,7 +99,7 @@ function Form({ formRef }) {
           progress: undefined,
           theme: "colored",
         });
-        setData(JSON.parse(JSON.stringify(dataTemplate)));
+        setData(JSON.parse(JSON.stringify(newDataTemplate)));
       } else {
         toast.error("Something went wrong", {
           position: "top-right",
@@ -185,27 +114,6 @@ function Form({ formRef }) {
       }
     }
   };
-
-  // useEffect(() => {
-  //   const testArray = [
-  //     { id: 0, name: "zero" },
-  //     { id: 1, name: "one" },
-  //     { id: 2, name: "two" },
-  //     { id: 3, name: "three" },
-  //     { id: 4, name: "four" },
-  //     { id: 5, name: "five" },
-  //   ];
-  //   console.log("before", JSON.stringify(testArray));
-  //   console.log("before", JSON.stringify(testArray[3]));
-
-  //   testArray.splice(
-  //     testArray.findIndex((item) => item.id == 3),
-  //     1
-  //   );
-
-  //   console.log("after", JSON.stringify(testArray));
-  //   console.log("after", JSON.stringify(testArray[3]));
-  // }, []);
 
   return (
     <div
@@ -282,21 +190,10 @@ function Form({ formRef }) {
             />
           </div>
 
-          <GuestSection
-            number="main"
-            data={data}
-            setData={setData}
-            errorMessage={errorMessage}
-            setErrorMessage={setErrorMessage}
-            errorMessageTracking={errorMessageTracking}
-            setErrorMessageTracking={setErrorMessageTracking}
-          />
-
-          {data.additionalGuests?.map((guest, index) => {
+          {data.guests?.map((guest, index) => {
             return (
               <GuestSection
                 key={index}
-                // number={guest.id}
                 number={index}
                 data={data}
                 setData={setData}
@@ -311,24 +208,22 @@ function Form({ formRef }) {
           {/* ADD GUEST SECTION  */}
           <div
             onClick={() => {
-              if (data.additionalGuests?.length <= 4) {
+              if (data.guests.length <= 4) {
                 const temp = JSON.parse(JSON.stringify(data));
                 const tempErrorMessageTracking = JSON.parse(
                   JSON.stringify(errorMessageTracking)
                 );
 
-                temp.additionalGuests?.push({
-                  ...emptyDataStructure,
-                  id: data.additionalGuests?.length,
+                temp.guests.push({
+                  ...newEmptyDataStructure,
                 });
-                tempErrorMessageTracking.additionalGuests?.push({
-                  ...emptyDataStructure,
-                  id: errorMessageTracking.additionalGuests?.length,
+                tempErrorMessageTracking.guests.push({
+                  ...newEmptyDataStructure,
                 });
                 setData(temp);
                 setErrorMessageTracking(tempErrorMessageTracking);
               } else {
-                setErrorMessage("maximum of 4 additional guests");
+                setErrorMessage(["maximum of 4 additional guests"]);
               }
             }}
             className="cursor-pointer border-2 py-2 rounded-lg text-center border-blue-500 group hover:bg-blue-500 my-5"
