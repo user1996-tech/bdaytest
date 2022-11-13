@@ -117,7 +117,7 @@ function Form({ formRef }) {
 
   return (
     <div
-      className="h-screen bg-[#031934] w-full flex flex-col items-centers py-5"
+      className="h-screen bg-[#031934] w-full flex flex-col items-centers py-5 overflow-hidden"
       id="formRef"
       ref={formRef}
     >

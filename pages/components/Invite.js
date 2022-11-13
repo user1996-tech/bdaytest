@@ -2,7 +2,7 @@ import React from "react";
 
 function Invite({ formRef }) {
   return (
-    <div className="flex items-center flex-col bg-[#00000075] snap-always snap-center">
+    <div className="flex items-center flex-col bg-[#00000075] snap-always snap-center overflow-hidden">
       <div className="h-screen flex flex-col justify-center items-center w-full">
         <div className="text-center">
           <p className="text-white text-[80px] lg:text-[120px] font-GreatVibes">
