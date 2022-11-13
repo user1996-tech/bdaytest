@@ -122,7 +122,7 @@ function Form({ formRef }) {
       ref={formRef}
     >
       <ToastContainer />
-      <div className="border-[#DCB974] border-2 rounded-lg justify-center mx-auto py-5 max-h-screen overflow-y-scroll text-white px-5 scrollbar-thin scrollbar-thumb-[#DCB974]/40 scrollbar-track-[#031934]/40 max-w-full">
+      <div className="border-[#DCB974] border-2 rounded-lg justify-center mx-auto py-5 max-h-screen overflow-y-scroll text-white px-5 scrollbar-thin scrollbar-thumb-[#DCB974]/40 scrollbar-track-[#031934]/40 max-w-full scrollbar-hide">
         <form onSubmit={handleSubmit} className="">
           {/* WILL YOU BE JOINING US SECTION  */}
           <div className="flex flex-col space-y-5">
