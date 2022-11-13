@@ -29,7 +29,7 @@ function Invite({ formRef }) {
         >
           <div className="hidden md:block">
             <img
-              src="/restaurant.png"
+              src="restaurant.png"
               className="w-[200px] h-[200px] rounded-lg"
             />
           </div>
