@@ -5,7 +5,7 @@ import Invite from "./components/Invite";
 export default function Home() {
   const formRef = useRef(null);
   return (
-    <div>
+    <div className="scrollbar-hide">
       <Invite formRef={formRef} />
       <Form formRef={formRef} />
     </div>
